@@ -5,7 +5,9 @@
     </div>
 
     <div class="product-card__content">
-      <h2 class="product-card__title">{{ product.title }}</h2>
+      <h2 class="product-card__title">
+        {{ product.title }}
+      </h2>
 
       <p class="product-card__description">
         {{ product.description }}
@@ -13,18 +15,26 @@
 
       <p class="product-card__price">${{ product.price }}</p>
 
+      <button class="product-card__favorite" @click="favoritesStore.toggleFavorite(product.id)">
+        {{ favoritesStore.isFavorite(product.id) ? '★ Favorito' : '☆ Agregar a favoritos' }}
+      </button>
+
       <button class="product-card__button">Ver producto</button>
     </div>
   </article>
 </template>
 
 <script setup>
+import { useFavoritesStore } from '../stores/favorites.js'
+
 defineProps({
   product: {
     type: Object,
     required: true,
   },
 })
+
+const favoritesStore = useFavoritesStore()
 </script>
 
 <style scoped>
@@ -71,6 +81,17 @@ defineProps({
   color: #0f172a;
 }
 
+.product-card__favorite {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: white;
+  color: #1e293b;
+  cursor: pointer;
+}
+
 .product-card__button {
   width: 100%;
   padding: 0.75rem;
@@ -81,7 +102,8 @@ defineProps({
   cursor: pointer;
 }
 
-.product-card__button:hover {
+.product-card__button:hover,
+.product-card__favorite:hover {
   opacity: 0.9;
 }
 </style>
