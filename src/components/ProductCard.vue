@@ -1,22 +1,31 @@
 <template>
   <article class="product-card">
     <div class="product-card__image">
-      <span>Imagen</span>
+      <img :src="product.image" :alt="product.title" />
     </div>
 
     <div class="product-card__content">
-      <h2 class="product-card__title">Producto de ejemplo</h2>
+      <h2 class="product-card__title">{{ product.title }}</h2>
 
-      <p class="product-card__description">Descripción del producto.</p>
+      <p class="product-card__description">
+        {{ product.description }}
+      </p>
 
-      <p class="product-card__price">$29.990</p>
+      <p class="product-card__price">${{ product.price }}</p>
 
       <button class="product-card__button">Ver producto</button>
     </div>
   </article>
 </template>
 
-<script setup></script>
+<script setup>
+defineProps({
+  product: {
+    type: Object,
+    required: true,
+  },
+})
+</script>
 
 <style scoped>
 .product-card {
@@ -32,9 +41,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 180px;
-  background-color: #e2e8f0;
-  color: #64748b;
+  height: 220px;
+  padding: 1rem;
+  background-color: #f8fafc;
+}
+
+.product-card__image img {
+  max-width: 100%;
+  max-height: 190px;
+  object-fit: contain;
 }
 
 .product-card__content {
