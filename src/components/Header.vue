@@ -1,13 +1,35 @@
 <template>
   <header class="header">
     <div class="header__container">
-      <h1 class="header__title">Vue Product Showcase</h1>
-      <p class="header__subtitle">Catálogo de productos</p>
+      <div>
+        <h1 class="header__title">Vue Product Showcase</h1>
+        <p class="header__subtitle">Catálogo de productos</p>
+      </div>
+
+      <v-btn
+        icon
+        variant="outlined"
+        @click="toggleTheme"
+        :aria-label="isDark ? 'Activar modo claro' : 'Activar modo oscuro'"
+      >
+        {{ isDark ? '☀️' : '🌙' }}
+      </v-btn>
     </div>
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed } from 'vue'
+import { useTheme } from 'vuetify'
+
+const theme = useTheme()
+
+const isDark = computed(() => theme.global.current.value.dark)
+
+const toggleTheme = () => {
+  theme.global.name.value = isDark.value ? 'light' : 'dark'
+}
+</script>
 
 <style scoped>
 .header {
@@ -19,6 +41,11 @@
 .header__container {
   max-width: 1200px;
   margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
 .header__title {

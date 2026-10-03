@@ -1,17 +1,16 @@
 <template>
   <main class="product-list">
     <h2 class="product-list__title">Productos</h2>
-
     <div class="product-list__filter">
-      <label for="category">Filtrar por categoría:</label>
-
-      <select id="category" v-model="filtersStore.selectedCategory">
-        <option value="">Todas las categorías</option>
-
-        <option v-for="category in productsStore.categories" :key="category" :value="category">
-          {{ category }}
-        </option>
-      </select>
+      <v-select
+        v-model="filtersStore.selectedCategory"
+        :items="productsStore.categories"
+        label="Filtrar por categoría"
+        clearable
+        variant="outlined"
+        density="comfortable"
+        data-cy="category-filter"
+      />
     </div>
 
     <p v-if="productsStore.loading" class="product-list__message">Cargando productos...</p>
@@ -70,27 +69,14 @@ onMounted(() => {
 }
 
 .product-list__filter {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  max-width: 400px;
+  min-height: 56px;
   margin-bottom: 1.5rem;
 }
 
-.product-list__filter label {
-  font-weight: 600;
-  color: #1e293b;
-}
-
-.product-list__filter select {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  background-color: white;
-}
-
 .product-list__grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
 }
 
@@ -101,5 +87,34 @@ onMounted(() => {
 
 .product-list__message--error {
   color: #dc2626;
+}
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .product-list__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet pequeña */
+@media (max-width: 750px) {
+  .product-list__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Celular */
+@media (max-width: 500px) {
+  .product-list {
+    padding: 1.5rem 1rem;
+  }
+
+  .product-list__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-list__filter {
+    max-width: none;
+  }
 }
 </style>

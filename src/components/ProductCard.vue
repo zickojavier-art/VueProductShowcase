@@ -1,27 +1,27 @@
 <template>
-  <article class="product-card">
-    <div class="product-card__image">
-      <img :src="product.image" :alt="product.title" />
-    </div>
+  <v-card class="product-card" elevation="2">
+    <img :src="product.image" :alt="product.title" class="product-card__image" />
 
-    <div class="product-card__content">
-      <h2 class="product-card__title">
-        {{ product.title }}
-      </h2>
+    <v-card-title class="product-card__title">
+      {{ product.title }}
+    </v-card-title>
 
+    <v-card-text>
       <p class="product-card__description">
         {{ product.description }}
       </p>
 
       <p class="product-card__price">${{ product.price }}</p>
+    </v-card-text>
 
-      <button class="product-card__favorite" @click="favoritesStore.toggleFavorite(product.id)">
+    <v-card-actions class="product-card__actions">
+      <v-btn variant="outlined" @click="favoritesStore.toggleFavorite(product.id)">
         {{ favoritesStore.isFavorite(product.id) ? '★ Favorito' : '☆ Agregar a favoritos' }}
-      </button>
+      </v-btn>
 
-      <button class="product-card__button">Ver producto</button>
-    </div>
-  </article>
+      <v-btn color="primary" variant="flat"> Ver producto </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script setup>
@@ -41,69 +41,39 @@ const favoritesStore = useFavoritesStore()
 .product-card {
   width: 100%;
   max-width: 320px;
-  overflow: hidden;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
 }
 
 .product-card__image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  width: 100%;
   height: 220px;
-  padding: 1rem;
+  object-fit: contain;
   background-color: #f8fafc;
 }
 
-.product-card__image img {
-  max-width: 100%;
-  max-height: 190px;
-  object-fit: contain;
-}
-
-.product-card__content {
-  padding: 1rem;
-}
-
 .product-card__title {
-  margin: 0;
-  color: #1e293b;
+  white-space: normal;
+  line-height: 1.4;
 }
 
 .product-card__description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
   color: #64748b;
 }
 
 .product-card__price {
+  margin-top: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #0f172a;
 }
 
-.product-card__favorite {
-  width: 100%;
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  background-color: white;
-  color: #1e293b;
-  cursor: pointer;
-}
-
-.product-card__button {
-  width: 100%;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 8px;
-  background-color: #1e293b;
-  color: white;
-  cursor: pointer;
-}
-
-.product-card__button:hover,
-.product-card__favorite:hover {
-  opacity: 0.9;
+.product-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: stretch;
 }
 </style>
